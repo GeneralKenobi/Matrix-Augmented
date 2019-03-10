@@ -1,0 +1,104 @@
+﻿<UserControl
+    x:Class="Matrix_Augmented.FractionBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Matrix_Augmented"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="60"
+    d:DesignWidth="100"
+	Width="100"
+	Height="60">
+
+
+	<UserControl.Resources>
+		<local:NumeratorConverter x:Key="NumeratorConverter"/>
+		<local:DenominatorConverter x:Key="DenominatorConverter"/>
+		<local:DecimalConverter x:Key="DecimalConverter"/>
+		<local:BoolToVisibiltyConverter x:Key="VisibilityConverter"/>
+		<local:ReversedBoolToVisibiltyConverter x:Key="ReversedVisibilityConverter"/>
+	</UserControl.Resources>
+
+
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Standard, Fraction view-->
+		<Grid Background="Transparent" Visibility="{x:Bind ShowDecimal, Mode=OneWay, Converter={StaticResource ReversedVisibilityConverter}}"
+			  CornerRadius="5"
+			  BorderThickness="2">
+			  
+			<!-- Border Brush -->
+			<Grid.BorderBrush>
+				<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+					<GradientStop Color="{StaticResource DarkGray}" Offset="0"/>
+					<GradientStop Color="Transparent" Offset="0.2"/>
+					<GradientStop Color="Transparent" Offset="0.8"/>
+					<GradientStop Color="{StaticResource DarkGray}" Offset="1"/>
+				</LinearGradientBrush>
+			</Grid.BorderBrush>
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="2"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<!-- Fraction line -->
+			<Border Grid.Row="1"
+					Background="{StaticResource DarkGrayBrush}"/>
+					
+			<!-- Numerator -->			
+			<Border Grid.Row="0" Margin="0 0 0 2">
+				<Viewbox>
+					<TextBox Style="{StaticResource FractionBoxTextBoxStyle}"		
+								Text="{Binding Numerator, Mode=TwoWay, Converter={StaticResource NumeratorConverter}}"
+								TextChanging="FractionTextChanging"
+								KeyDown="FractionInputControl"
+								PlaceholderText="0"/>
+				</Viewbox>
+			</Border>			
+
+			<!-- Denominator -->
+			<Border Grid.Row="2" Margin="0 2 0 0">
+				<Viewbox>
+					<TextBox Style="{StaticResource FractionBoxTextBoxStyle}"
+								Text="{Binding Denominator, Mode=TwoWay, Converter={StaticResource DenominatorConverter}}"
+						 		PlaceholderText="1"
+								TextChanging="FractionTextChanging"
+						 		KeyDown="FractionInputControl"/>
+				</Viewbox>
+			</Border>
+		</Grid>
+
+		<!-- Decimal TextBox -->
+		<Grid Padding="0" Visibility="{x:Bind ShowDecimal, Converter={StaticResource VisibilityConverter}, Mode=OneWay}">
+			<Viewbox>
+				<TextBox Style="{StaticResource FractionBoxTextBoxStyle}"
+								Text="{Binding Decimal, Mode=TwoWay, Converter={StaticResource DecimalConverter}}"
+						 		PlaceholderText="0"
+								TextChanging="DecimalTextChanging"
+								LostFocus="DecimalLosingFocus"
+						 		KeyDown="DecimalInputControl"/>
+			</Viewbox>		
+		</Grid>
+
+		<!-- Index -->
+		<Viewbox Grid.Row="1" HorizontalAlignment="Right">
+			<TextBlock  Style="{StaticResource BaseTextBlockStyle}"
+							Text="{x:Bind Index, Mode=OneWay}"
+							Foreground="{StaticResource DarkGrayBrush}"
+							HorizontalAlignment="Right"
+							Margin="0 0 6 0"/>
+		</Viewbox>
+
+	</Grid>
+
+
+</UserControl>

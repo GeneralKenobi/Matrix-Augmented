@@ -1,0 +1,116 @@
+﻿<Page
+    x:Class="Matrix_Augmented.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Matrix_Augmented"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	Background="{StaticResource LightBlackBrush}"
+	RequestedTheme="Light">
+
+
+	<!-- Main border -->
+	<Border Background="{StaticResource WhiteBrush}">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="60"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="80"/>
+			</Grid.RowDefinitions>
+
+			<!-- Top stripe with title -->
+			<Border Background="{StaticResource LightBlackBrush}">
+				<Viewbox>
+					<TextBlock Style="{StaticResource DefaultTextBlockStyle}"
+								HorizontalAlignment="Center"
+								Foreground="{StaticResource WhiteBrush}"
+								Text="[Matrix Augmented]"
+								FontSize="{StaticResource FontSizeSmaller}"
+								/>
+				</Viewbox>
+			</Border>
+
+			<!-- List of all currently defined matrices -->
+			<Grid Grid.Row="1" Padding="0 5">
+
+				<Grid.Background>
+					<LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+						<GradientStop Color="{StaticResource LightBlack}" Offset="0"/>
+						<GradientStop Color="{StaticResource DarkGray}" Offset="0.5"/>
+						<GradientStop Color="{StaticResource LightBlack}" Offset="1"/>
+					</LinearGradientBrush>
+				</Grid.Background>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="50"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Add New Matrix Button -->
+				<Viewbox HorizontalAlignment="Center"
+						 VerticalAlignment="Center">
+
+					<Button Content="+"							
+							Style="{StaticResource TopMenuButton}"
+							Command="{Binding NewMatrixCommand}"
+							IsEnabled="{Binding CanAddMatrix}"/>
+				</Viewbox>
+
+				<!-- Delete Current Matrix Button -->
+				<Viewbox Grid.Column="2"
+						 HorizontalAlignment="Center"
+						 VerticalAlignment="Center">
+
+					<Button Content="X"							
+							Style="{StaticResource TopMenuButton}"
+							Foreground="{StaticResource RedBrush}"
+							IsEnabled="{Binding CanDeleteMatrix}"
+							Command="{Binding DeleteCurrentMatrixCommand}"/>
+				</Viewbox>
+
+				<!-- StackPanel with matrices -->
+				<ScrollViewer   Grid.Column="1"
+								Style="{StaticResource DefaultScrollViewerStyle}"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								HorizontalScrollBarVisibility="Auto"
+								VerticalScrollBarVisibility="Disabled">
+
+					<StackPanel x:Name="MatricesStackPanel"
+								Orientation="Horizontal"/>
+
+				</ScrollViewer>
+			</Grid>
+			
+			<!-- Fields of the currently shown Matrix -->
+			<Border	Grid.Row="2" Grid.RowSpan="2"
+					BorderThickness="2 0"
+					BorderBrush="{StaticResource DarkGrayBrush}">
+
+				<ScrollViewer x:Name="MainGridScrollViewer"
+					VerticalScrollBarVisibility="Visible"
+					HorizontalScrollBarVisibility="Auto"
+					Style="{StaticResource DefaultScrollViewerStyle}"
+					 >
+
+					<Border Padding="30">
+						<Grid x:Name="MainGrid"/>
+					</Border>
+				</ScrollViewer>
+			</Border>
+
+			<!-- Bottom menu -->		
+			<local:BottomMenu  VerticalAlignment="Bottom"
+							   Grid.Row="3" Grid.RowSpan="2"
+							   MenuStateChanging="BottomMenuStateChanging"
+							   MenuStateChanged="BottomMenuStateChanged"
+							   NavigationRequested="ChildRequestedNavigation"
+							   MaxHeight="400"/>			
+
+		</Grid>
+	</Border>
+</Page>

@@ -1,0 +1,8 @@
+﻿1. ERROR CHCECK FOR:
+
+a) check Input has an undefined matrix
+b) check Addition/subtraction/multiplication of matrix of incompatible size
+c) check Unknown symbol
+d) check d(number), r(number), i(number), t(number)
+e) check There are more '(' than ')' or ')' than '('
+f) 

@@ -1,0 +1,87 @@
+﻿<UserControl
+    x:Class="Matrix_Augmented.ResultBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Matrix_Augmented"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="400"
+	>
+
+	<UserControl.Resources>
+		<local:NumeratorConverter x:Key="NumeratorConverter"/>
+		<local:DenominatorConverter x:Key="DenominatorConverter"/>
+		<local:DecimalConverter x:Key="DecimalConverter"/>
+		<local:BoolToVisibiltyConverter x:Key="VisibilityConverter"/>
+		<local:ReversedBoolToVisibiltyConverter x:Key="ReversedVisibilityConverter"/>
+	</UserControl.Resources>
+
+	<Grid BorderThickness="0 0 0 1"
+			BorderBrush="{StaticResource WhiteBrush}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="7*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="2*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Textblock with information of the calcuation -->
+		<Border Grid.Column="0">
+			<Viewbox>
+				<TextBlock Style="{StaticResource DefaultTextBlockStyle}"
+							Text="{Binding Message, Mode=TwoWay}"
+							Foreground="{StaticResource WhiteBrush}"
+							FontSize="{StaticResource FontSizeSmall}"/>
+			</Viewbox>
+		</Border>
+
+		<!-- Result -->
+		<Grid Grid.Column="2">
+
+			<!-- Decimal -->
+			<Viewbox Visibility="{Binding ShowDecimal, Converter={StaticResource VisibilityConverter}, Mode=OneWay}">
+				<TextBlock	Style="{StaticResource DefaultTextBlockStyle}"
+							Text="{Binding ResultDecimal, Mode=TwoWay}"
+							Foreground="{StaticResource WhiteBrush}"
+							FontSize="{StaticResource FontSizeSmall}"/>
+			</Viewbox>
+
+			<!-- Standard -->
+			<Viewbox Visibility="{Binding ShowDecimal, Converter={StaticResource ReversedVisibilityConverter}, Mode=OneWay}"
+					 Margin="0 0 0 3">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="1"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+
+					<!-- Numerator -->
+					<TextBlock	Style="{StaticResource DefaultTextBlockStyle}"
+								Text="{Binding ResultNumerator, Mode=TwoWay}"
+								Foreground="{StaticResource WhiteBrush}"
+								FontSize="{StaticResource FontSizeSmall}"
+								Grid.Row="0"/>
+
+					<!-- FractionLine -->
+					<Border Background="{StaticResource WhiteBrush}"
+							Grid.Row="1"/>
+
+					<!-- Denominator -->
+					<TextBlock	Style="{StaticResource DefaultTextBlockStyle}"
+								Text="{Binding ResultDenominator, Mode=TwoWay}"
+								Foreground="{StaticResource WhiteBrush}"
+								FontSize="{StaticResource FontSizeSmall}"
+								Grid.Row="2"
+								Margin="0 2 0 0"/>
+
+					
+				</Grid>
+			</Viewbox>
+
+			<!-- Fraction -->
+		</Grid>
+
+    </Grid>
+</UserControl>
