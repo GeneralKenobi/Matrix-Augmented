@@ -3,7 +3,7 @@
 Project is finished.
 
 Team Foundation Version Control was used as version control tool for this project.
-This repository contains only the last committ.
+This repository contains only the last commit.
 I've put this project here to have it in the same place as my other projects.
 
 
